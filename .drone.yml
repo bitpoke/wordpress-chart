@@ -18,8 +18,7 @@ pipeline:
     image: quay.io/presslabs/bfc
     pull: true
     commands:
-      - helm lint --set 'site.domains[0]=example.com' charts/wordpress-site
-      - helm dep build charts/wordpress-site
+      - make lint
 
   build:
     image: quay.io/presslabs/bfc

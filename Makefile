@@ -14,7 +14,8 @@ chart:
 	yq w -i $(CHARTDIR)/Chart.yaml appVersion "$(APP_VERSION)"
 
 lint:
-	helm lint chart/stack
+	helm lint charts/wordpress-site --set 'site.domains[0]=example.com'
+	helm dep build charts/wordpress-site
 
 dependencies:
 	test -d $(BINDIR) || mkdir $(BINDIR)
