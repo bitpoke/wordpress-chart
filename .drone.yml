@@ -42,7 +42,7 @@ pipeline:
 
   publish:
     group: publish
-    image: quay.io/presslabs/bfc
+    image: quay.io/presslabs/kluster-toolbox
     environment:
       - GH_USER=presslabs-bot
     commands:
