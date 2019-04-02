@@ -59,7 +59,7 @@ services:
   tiller:
     environment:
       - KUBERNETES_MASTER=http://kubernetes:8080
-    image: gcr.io/kubernetes-helm/tiller:v2.11.0
+    image: gcr.io/kubernetes-helm/tiller:v2.13.0
   kubernetes:
     image: k8s.gcr.io/hyperkube:v1.10.7
     command:
