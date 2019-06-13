@@ -4,6 +4,9 @@
 
 replicaCount: 1
 
+ingress:
+  class: "nginx"
+
 # Uncomment to use a custom image
 # image:
 #   repository: nginx

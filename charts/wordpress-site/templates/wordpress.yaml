@@ -101,6 +101,9 @@ spec:
     - key: "cloud.google.com/gke-preemptible"
       operator: "Exists"
   ingressAnnotations:
+    {{- if .Values.ingress.class }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+    {{- end }}
     nginx.ingress.kubernetes.io/proxy-body-size: "10m"
     {{- if eq "ClusterIssuer" (default "ClusterIssuer" .Values.tls.issuerKind) }}
     certmanager.k8s.io/cluster-issuer: {{ default "stack-default" .Values.tls.issuerName }}
