@@ -52,6 +52,12 @@ media: {}
   #    # credentials to access Google Cloud Storage
   #    google_credentials: >
 
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUPercentage: 60
+
 mysql:
   mysqlConf: {}
   replicaCount: 1
