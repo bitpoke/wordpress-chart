@@ -38,13 +38,42 @@ spec:
     descriptor:
         type: Wordpress
         version: {{ .Chart.Version }}
-        description: {{ .Chart.Description }}
+        description: |
+          {{ .Chart.Description }}
+
+          ### Running `wp-cli` commands
+
+          1. List site pods
+
+          ```
+            kubectl get pod -l \
+              "app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/component=web,app.kubernetes.io/name=wordpress"
+          ```
+
+          2. Shell into the container
+
+          ```
+            kubectl exec -it POD_NAME /bin/bash
+          ```
+
+          ### Port-forwarding the database
+          ```
+            kubectl port-forward svc/mysite-mysql-master 3307:3306
+          ```
+
+          Now the MySQL database is available on localhost at port `3307`, and you can connect to it by:
+          ```
+            mysql -u root -p -h 127.0.0.1 -P 3307
+          ```
+
         maintainers:
             - name: Presslabs
               url: https://presslabs.com/stack
         links:
             - description: Presslabs Wordpress Operator
               url: https://github.com/presslabs/wordpress-operator
+            - description: Helm chart values
+              url: https://raw.githubusercontent.com/presslabs/wordpress-chart/master/charts/wordpress-site/values.yaml
     info:
         - name: Ingress IP
           type: Reference
@@ -58,4 +87,10 @@ spec:
           {{ else }}
           value: http://{{ index .Values.site.domains 0 }}/wp-admin/
           {{ end }}
+        - name: MySQL root password
+          type: Reference
+          valueFrom:
+            secretRef:
+              name: {{ include "wordpress-site.fullname" . }}-db
+              key: ROOT_PASSWORD
 {{- end }}
